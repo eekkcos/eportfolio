@@ -1,0 +1,92 @@
+<!-- ind1.html -->
+<div>
+  <h2>Projects</h2>
+  <h2>CLO (CONSUMER LOANS OPERATIONS) Tier 3 Dashboard</h2>
+
+  <p><strong>Data Loading</strong></p>
+
+  <ol>
+    <li>
+      We started by receiving PROD data (production data) from our supervisor and we had to hash out all the PII (Personal Identifier Information) data before using code to ...
+    </li>
+    <li>
+      Then we start loading data into the source data lake through <strong>MobaXTerm</strong>.
+      We had to load data into landing, followed by staging before pushing it to the source data lake.
+    </li>
+  </ol>
+
+  <div style="display: flex; gap: 20px; overflow-x: auto;">
+    <pre style="background-color: #f5f5f5; padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.5; min-width: 400px; white-space: pre-wrap;">
+<code>import pandas as pd
+import csv
+
+file = 'T_OPS_MAPPING_vDUP_done.xlsx'
+sheet_name = 't_ops_mapping_20250430'
+
+df = pd.read_excel(file, sheet_name=sheet_name)
+
+cols = df.select_dtypes(object).columns
+df[cols] = df[cols].apply(lambda x: x.astype(str).str.strip())
+df[cols] = df[cols].apply(lambda x: x.str.replace('|', ''))
+df[cols] = df[cols].apply(lambda x: x.str.replace('\\n', ''))
+df[cols] = df[cols].apply(lambda x: x.str.replace('\\r', ''))
+
+df.rename(columns=lambda c: c.replace('|',''), inplace=True)
+df.rename(columns=lambda c: c.replace('\\n',''), inplace=True)
+df.rename(columns=lambda c: c.replace('\\r',''), inplace=True)
+
+df.to_csv("T_OPS_MAPPING_vDUP_done.txt", header=True, index=False, sep='|', quoting=csv.QUOTE_NONE, escapechar='\\n')
+
+print("T_OPS_MAPPING_vDUP_done.txt file...")
+print("Done")</code>
+    </pre>
+
+    <pre style="background-color: #f5f5f5; padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.5; min-width: 400px; white-space: pre-wrap;">
+<code>import pandas as pd
+
+# Load the Excel file
+df = pd.read_excel(file_path, sheet_name=sheet_name)
+columns_to_check = ['ops_country', 'system', 'case_description']
+
+df['Excel_Row_Number'] = df.index + 2
+
+def normalize_string(s):
+    return str(s).strip().lower()
+
+normalized_df = df[columns_to_check].apply(lambda col: col.map(normalize_string))
+
+duplicates_mask = normalized_df.duplicated(keep=False)
+duplicate_rows = df[duplicates_mask]
+
+if not duplicate_rows.empty:
+    print("Duplicate rows found:")
+    header = ['Excel_Row_Number'] + columns_to_check
+    max_widths = [max(20, len(str(row))) for row in duplicate_rows[header].astype(str).values.flatten()]
+    max_widths = [max(len(col), width) for col, width in zip(header, max_widths)]
+    header_format = "".join([f"{{:<{width}}}" for width in max_widths])
+    print(header_format.format(*header))
+    print("-" * sum(max_widths))
+    for index, row in duplicate_rows.iterrows():
+        print(header_format.format(row['Excel_Row_Number'], *[row[col] for col in columns_to_check]))
+else:
+    print("No duplicate rows found.")</code>
+    </pre>
+  </div>
+
+  <h3>Reflection</h3>
+  <p>
+    Gaining hands-on experience with enterprise-level data tools was truly eye-opening, especially since the tools I had previously used in school were primarily designed for individual work.
+  </p>
+  <p>
+    This experience highlighted the vast amount of data managed by an organization like OCBC and deepened my understanding of the critical role that data security, management, and governance.
+  </p>
+  <p>
+    In a financial institution like OCBC, where data is highly sensitive, proper handling directly impacts customer trust and loyalty.
+  </p>
+  <p>
+    Many of the projects I worked on supported internal teams, further underscoring how data-driven dashboards can greatly enhance productivity and operational efficiency.
+  </p>
+  <p>
+    It feels satisfactory to know that my work would bring much convenience to others as well.
+  </p>
+</div>

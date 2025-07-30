@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sock Kee's Internship</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="mainframe">
+    <h1 class="toph1">Sock Kee's</h1>
+
+    <div class="logo-wrapper">
+      <img src="assets/ocbclogo.png" alt="OCBC Logo" class="logo-img" />
+      
+      <nav class="navbar">
+        <button class="nav-btn" onclick="openScreen('home')">Home</button>
+        <button class="nav-btn" onclick="openScreen('jrp')">Job Role and Projects</button>
+        <button class="nav-btn" onclick="openScreen('ind1')">IND1</button>
+        <button class="nav-btn" onclick="openScreen('ind2')">IND2</button>
+      </nav>
+    </div>
+
+    <div id="screen" class="screen-container">
+      <div class="screen-header">
+        <span id="screen-title" class="screen-title"></span>
+        <button class="close-btn" onclick="closeScreen()">×</button>
+      </div>
+      <div id="screen-content" class="screen-content"></div>
+    </div>
+
+    <h1 class="bottomh1">Internship</h1>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

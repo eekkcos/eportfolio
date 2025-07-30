@@ -1,0 +1,302 @@
+/*
+change from px/rem to vm/vh and use max-width/max-height
+
+media queries for mobile screens::after
+<768px -> flex-direction: column; (stacks items vertically)
+
+width: 100%; height:auto;
+
+e.g.
+max-width: 1200px;
+width: 90%;
+padding: 1rem;
+
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+ensures that padding and borders are included in width/height, 
+preventing accidental overflows
+*/
+
+@font-face {
+  font-family: 'Taeng';
+  src: url('./assets/Griun_NoltoTAENGGU-Rg.ttf') format('truetype');
+  font-weight: normal;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  color: white;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.mainframe {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column; /*forces vertical stacking on smaller screens for btr readability*/
+  align-items: center;
+  text-align: center;
+  background: rgba(222, 145, 145, 0.832);
+  overflow-x: hidden;
+}
+
+/* Top-left text */
+.toph1 {
+  position: absolute;
+  top: 1rem;
+  left: 4rem;
+  font-size: clamp(2rem, 6vw, 6rem);
+  font-family: 'Taeng', sans-serif;
+}
+
+/* Bottom-right text */
+.bottomh1 {
+  position: absolute;
+  bottom: 1rem;
+  right: 4rem;
+  font-size: clamp(2rem, 6vw, 6rem);
+  font-family: 'Taeng', sans-serif;
+}
+
+.logo-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  max-width: 1000px;
+}
+
+.logo-img {
+  width: 100%;
+  height: auto;
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5rem;
+  margin-top: 2rem;
+  max-width: 1000px;
+  
+}
+
+.nav-btn {
+  background-color: #e60012;
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 2rem;
+  font-family: 'Taeng', sans-serif;
+}
+
+.nav-btn:hover {
+  background-color: #cc0010;
+}
+
+.hidden {
+  display: none;
+}
+
+.screen-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(145deg, #ffe5f8, #d4f0ff);
+  border: 3px solid #ff91c2;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 90vw;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow: auto;
+  z-index: 1000;
+  color: #ff2fa0;
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+  pointer-events: none;
+   display: none;
+}
+
+.screen-open {
+  pointer-events: auto;
+}
+
+.screen-content {
+  overflow-y: auto;
+  text-align: left;
+  opacity: 0;
+  font-size: 1.1rem;
+  width: 100%;
+  height: 100%;
+  padding-left: 1rem;
+  transition: opacity 0.3s ease 0.3s;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.screen-header {
+  flex: 0 0 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border-bottom: 1px solid #ff91c2;
+  background: #f6b2d1;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.screen-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.screen-open .screen-content {
+  opacity: 1;
+}
+
+.close-btn {
+  padding: 0.625rem;
+  position: absolute;
+  top: 0.7rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #ff9bd3;
+  color: #ff4ba8;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+}
+
+.close-btn:hover {
+  background-color: #ffe4f2;
+  color: #e60073;
+  transform: scale(1.1);
+}
+
+.intro-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  flex-wrap: wrap; /*allows elements to stack vertically*/
+}
+
+.intro-container h1 {
+  flex-basis: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.imagecollage {
+  flex: 1;
+  min-width: 250px;
+  max-width: 40%;
+}
+
+.imagecollage img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.3rem;
+}
+
+.intro-text {
+  flex: 1;
+  min-width: 250px;
+  text-align: left;
+  color: #333;
+  padding-left: 1rem;
+}
+
+.screen-open {
+  animation: tvOnExpand 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: center center;
+}
+
+
+@keyframes tvOnExpand {
+  from {
+    width: 5vw;
+    height: 5vh;
+    opacity: 1;
+  }
+  to {
+    width: 90vw;
+    height: 90vh;
+    opacity: 1;
+  }
+}
+
+
+
+/* ✅ Mobile Media Query */
+@media (max-width: 768px) {
+  .toph1, .bottomh1 {
+    font-size: 2.5rem;
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .logo-wrapper {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    max-width: 1200px;
+    width: 90%;
+    
+  }
+
+  .intro-container {
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .imagecollage, .intro-text {
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+  }
+
+  .screen-container {
+    width: 90vw;
+    height: 90vh;
+  }
+}
