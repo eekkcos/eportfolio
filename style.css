@@ -26,23 +26,26 @@ preventing accidental overflows
 }
 
 html, body {
-  height: 100%;
   margin: 0;
   color: white;
   font-size: 20px;
   font-family: 'Taeng', sans-serif;
   flex-direction: column;
   overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
 
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 
 .mainframe {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
   background: rgba(222, 145, 145, 0.832);
-  overflow: hidden;
 }
 
 .top-section {
@@ -78,17 +81,14 @@ html, body {
   flex-wrap: wrap; /* Optional: wrap on small screens */
 }
 
-.title-bar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
 
 
 .main-title {
-  font-size: 2.5rem;
-  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  margin:0
 }
+
+
 
 
 .logo-wrapper {
@@ -118,7 +118,7 @@ html, body {
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background 0.3s ease;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   font-family: 'Taeng', sans-serif;
 }
 
@@ -126,9 +126,6 @@ html, body {
   background-color: #cc0010;
 }
 
-.hidden {
-  display: none;
-}
 
 .screen-container {
   position: fixed;
@@ -142,14 +139,14 @@ html, body {
   flex-direction: column;
   justify-content: flex-start;
   width: 90vw;
-  max-width: 1200px;
+  max-width: 100vw; /* Prevents overflow */
   max-height: 90vh;
   overflow: auto;
   z-index: 1000;
   color: #ff2fa0;
   box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
   pointer-events: none;
-   display: none;
+  display: none;
 }
 
 .screen-open {
@@ -157,7 +154,6 @@ html, body {
 }
 
 .screen-content {
-  overflow-y: auto;
   text-align: left;
   opacity: 0;
   font-size: 1.1rem;
@@ -166,6 +162,9 @@ html, body {
   padding-left: 1rem;
   transition: opacity 0.3s ease 0.3s;
   font-family: 'Quicksand', sans-serif;
+  box-sizing: border-box;
+  overflow-y: overlay;
+
 }
 
 .screen-header {
@@ -217,6 +216,7 @@ html, body {
 .intro-container {
   display: flex;
   padding:1rem 2rem 2rem 2rem;
+  
 
 }
 
@@ -229,19 +229,33 @@ html, body {
 
 .imagecollage img {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1000px;
   height: auto;
   border-radius: 10px;
+  object-fit: contain; /* prevents squishing */
+  aspect-ratio: auto; /* if you're using modern browsers */
+  
 }
+
+
 
 
 .intro-text {
   padding:2rem;
   max-width: 100%;
   text-align: left;
-  font-size:30px;
+  font-size:25px;
   color:black;
 }
+
+.contact-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px; /* space between items */
+  align-items: center;
+  margin-top: 10px;
+}
+
 
 .screen-open {
   animation: tvOnExpand 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -264,46 +278,57 @@ html, body {
 
 
 
-/* ✅ Mobile Media Query */
-@media (max-width: 768px) {
-  .toph1, .bottomh1 {
-    font-size: 2.5rem;
-    left: 1rem;
-    right: 1rem;
-  }
+@media (max-width: 1000px) {
 
-  .logo-wrapper {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .navbar {
+  .top-section,
+  .header-flex,
+  .intro-container,
+  .contact-info {
     flex-direction: column;
     align-items: center;
+    text-align: center;
+  }
+  
+
+  .top-section,
+  .header-flex {
     gap: 1rem;
-    margin: 1rem 0;
-    max-width: 1200px;
-    width: 90%;
-    
   }
 
-  .intro-container {
-    flex-direction: column;
-    align-items: center;
-    max-width: 1200px;
-    width: 90%;
-    margin: 0 auto;
-  }
-
-  .imagecollage, .intro-text {
-    max-width: 100%;
-    width: 100%;
-    padding: 0;
+  .intro-text {
+    padding: 1rem;
+    font-size: 1.1rem;
   }
 
   .screen-container {
-    width: 90vw;
-    height: 90vh;
+    width: 95vw;
+    height: 95vh;
   }
+
+  .screen-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .close-btn {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .nav-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar {
+    justify-content: center;
+  }
+
+  .imagecollage img {
+    max-width: 100%;
+  }
+
 }
+
+
