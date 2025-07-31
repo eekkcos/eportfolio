@@ -7,18 +7,43 @@
 </head>
 <body>
   <div class="mainframe">
-    <h1 class="toph1">Sock Kee's</h1>
+      <div class="top-section">
+        <div class="title-bar">
+          <h1 class="main-title">Sock Kee's Internship @</h1>
+          <img src="assets/ocbclogo.png" alt="OCBC Logo" class="logo-img" />
+          <h1 class="main-title"></h1>
+        </div>
 
-    <div class="logo-wrapper">
-      <img src="assets/ocbclogo.png" alt="OCBC Logo" class="logo-img" />
-      
-      <nav class="navbar">
-        <button class="nav-btn" onclick="openScreen('home')">Home</button>
-        <button class="nav-btn" onclick="openScreen('jrp')">Job Role and Projects</button>
-        <button class="nav-btn" onclick="openScreen('ind1')">IND1</button>
-        <button class="nav-btn" onclick="openScreen('ind2')">IND2</button>
-      </nav>
+        <nav class="navbar">
+          <button class="nav-btn" onclick="openScreen('jrp')">Job Role and Projects</button>
+          <button class="nav-btn" onclick="openScreen('ind1')">IND1</button>
+          <button class="nav-btn" onclick="openScreen('ind2')">IND2</button>
+        </nav>
+      </div>
+
+
+    <div class="intro-container">
+      <div class="imagecollage">
+        <img src="public/collage.jpg" alt="collage" />
+      </div>
+
+      <div class="intro-text">
+        <p><b>
+          I am Sock Kee, a Big Data & Analytics student from Temasek Polytechnic,
+          currently interning at OCBC's Group Engineering, Enterprise Data department as a Data Engineer/Analyst Intern!
+        </p>
+
+        <p>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sockkee0621@gmail.com" target="_blank"><strong>Email</strong></a>
+        </p>
+        <p>
+          <a href="https://www.linkedin.com/in/sock-kee-ng-b3771616a/" target="_blank" rel="noopener noreferrer"><strong>LinkedIn</strong></a>
+        </p>
+      </div>
     </div>
+  </div>
+
+    
 
     <div id="screen" class="screen-container">
       <div class="screen-header">
@@ -27,8 +52,6 @@
       </div>
       <div id="screen-content" class="screen-content"></div>
     </div>
-
-    <h1 class="bottomh1">Internship</h1>
   </div>
 
   <script src="script.js"></script>

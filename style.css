@@ -29,82 +29,96 @@ html, body {
   height: 100%;
   margin: 0;
   color: white;
-  font-size: 16px;
-  box-sizing: border-box;
+  font-size: 20px;
+  font-family: 'Taeng', sans-serif;
+  flex-direction: column;
+  overflow-x: hidden;
+
 }
 
-*, *::before, *::after {
-  box-sizing: inherit;
-}
 
 .mainframe {
-  padding: 0;
-  margin: 0;
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column; /*forces vertical stacking on smaller screens for btr readability*/
-  align-items: center;
-  text-align: center;
-  background: rgba(222, 145, 145, 0.832);
-  overflow-x: hidden;
-}
-
-/* Top-left text */
-.toph1 {
-  position: absolute;
-  top: 1rem;
-  left: 4rem;
-  font-size: clamp(2rem, 6vw, 6rem);
-  font-family: 'Taeng', sans-serif;
-}
-
-/* Bottom-right text */
-.bottomh1 {
-  position: absolute;
-  bottom: 1rem;
-  right: 4rem;
-  font-size: clamp(2rem, 6vw, 6rem);
-  font-family: 'Taeng', sans-serif;
-}
-
-.logo-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 60%;
-  max-width: 1000px;
+  height: 100%;
+  background: rgba(222, 145, 145, 0.832);
+  overflow: hidden;
 }
 
-.logo-img {
-  width: 100%;
-  height: auto;
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2rem 0.5rem 2rem;
+  flex-wrap: wrap; /* Makes it responsive */
+  
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 1;
+  
 }
 
 .navbar {
   display: flex;
+  gap: 1rem;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-  max-width: 1000px;
-  
+  justify-content: flex-end;
+}
+
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2rem;
+  flex-wrap: wrap; /* Optional: wrap on small screens */
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+.main-title {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+
+.logo-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-img {
+  height: 2.5rem;
+  width: auto;
+}
+
+.navbar {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* Optional: allows nav to wrap nicely on small screens */
 }
 
 .nav-btn {
   background-color: #e60012;
   color: white;
   border: none;
-  padding: 0.625rem 1.25rem;
+  padding: 0.6rem 1rem;
   font-weight: bold;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background 0.3s ease;
-  font-size: 2rem;
+  font-size: 1rem;
   font-family: 'Taeng', sans-serif;
 }
 
@@ -199,41 +213,34 @@ html, body {
   transform: scale(1.1);
 }
 
+/* Layout for bottom content */
 .intro-container {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  flex-wrap: wrap; /*allows elements to stack vertically*/
-}
+  padding:1rem 2rem 2rem 2rem;
 
-.intro-container h1 {
-  flex-basis: 100%;
-  margin: 0;
-  padding: 0;
-  text-align: left;
 }
 
 .imagecollage {
-  flex: 1;
-  min-width: 250px;
-  max-width: 40%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
 }
 
 .imagecollage img {
   width: 100%;
+  max-width: 1400px;
   height: auto;
-  border-radius: 0.3rem;
+  border-radius: 10px;
 }
 
+
 .intro-text {
-  flex: 1;
-  min-width: 250px;
+  padding:2rem;
+  max-width: 100%;
   text-align: left;
-  color: #333;
-  padding-left: 1rem;
+  font-size:30px;
+  color:black;
 }
 
 .screen-open {
