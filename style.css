@@ -218,9 +218,10 @@ html, body {
 /* Layout for bottom content */
 .intro-container {
   display: flex;
-  padding:1rem 1rem 2rem 2rem;
+  margin:4rem 4rem 1rem 4rem;
+  background:white;
+  border-radius: 10px;
   
-
 }
 
 .imagecollage {
@@ -231,8 +232,8 @@ html, body {
 }
 
 .imagecollage img {
-  width: 100%;
-  max-width: 700px;
+  width: 80%;
+  max-width: 600px;
   height: auto;
   border-radius: 10px;
   object-fit: contain; /* prevents squishing */
@@ -258,6 +259,17 @@ html, body {
   align-items: center;
 }
 
+.ocbcintro{
+  background:white;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  font-size:20px;
+  color:black;
+  text-align: left;
+  margin-left: 4rem;
+  margin-right: 4rem;
+
+}
 
 .screen-open {
   animation: tvOnExpand 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;

@@ -1,6 +1,5 @@
 const screenData = {
-  home: { file: 'home.html', title: 'Home' },
-  jrp: { file: 'jrp.html', title: 'Job Role and Projects' },
+  reflection: { file: 'reflection.html', title: 'Reflection' },
   ind1: { file: 'ind1.html', title: 'IND1' },
   ind2: { file: 'ind2.html', title: 'IND2' },
 };
