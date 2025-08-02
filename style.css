@@ -38,6 +38,10 @@ html, body {
   
 }
 
+h3,p,ul {
+  margin:0.5rem;
+}
+
 *, *::before, *::after {
   box-sizing: inherit;
 }
@@ -176,7 +180,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-  border-bottom: 1px solid #ff91c2;
+  border-bottom:  SOLID solid #ff91c2;
   background: #f6b2d1;
   font-family: 'Quicksand', sans-serif;
 }
@@ -197,7 +201,7 @@ html, body {
   right: 1rem;
   width: 2rem;
   height: 2rem;
-  border: 1px solid #ff9bd3;
+  border:  SOLID solid #ff9bd3;
   color: #ff4ba8;
   font-weight: bold;
   font-size: 1.2rem;
@@ -218,10 +222,11 @@ html, body {
 /* Layout for bottom content */
 .intro-container {
   display: flex;
-  margin:4rem 4rem 1rem 4rem;
+  margin:2rem;
   background:white;
   border-radius: 10px;
-  
+  justify-content: center;  /* horizontal centering of child */
+  align-items: center; 
 }
 
 .imagecollage {
@@ -238,18 +243,16 @@ html, body {
   border-radius: 10px;
   object-fit: contain; /* prevents squishing */
   aspect-ratio: auto; /* if you're using modern browsers */
-  
 }
-
 
 
 
 .intro-text {
   padding:1rem;
-  max-width: 100%;
   text-align: left;
   font-size:20px;
   color:black;
+   
 }
 
 .contact-info {
@@ -266,8 +269,8 @@ html, body {
   font-size:20px;
   color:black;
   text-align: left;
-  margin-left: 4rem;
-  margin-right: 4rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 
 }
 
@@ -275,6 +278,26 @@ html, body {
   animation: tvOnExpand 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   transform-origin: center center;
 }
+
+.site-footer {
+  background-color: #ffe5f8;
+  color: #ff2fa0;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 2px solid #ff91c2;
+  font-family: 'Taeng', sans-serif;
+}
+
+.site-footer a {
+  color: #ff2fa0;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
 
 
 @keyframes tvOnExpand {
