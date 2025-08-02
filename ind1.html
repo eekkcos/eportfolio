@@ -1,8 +1,9 @@
 <!-- ind1.html -->
 <div>
+  <div class="ind1text">
   <h3>Task 1: Datalake Ingestion for OCBCSG (Operations Department)</h3>
-  <p>I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.</p>
-  <p>As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
+  <p>I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.
+    As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
      This helped us identify the essential columns needed and clarified which fields contained PII (Personally Identifiable Information). 
      After receiving the sample data, we anonymized all PII using hashing techniques and converted the files to .txt format before ingestion.</p>
 
@@ -12,13 +13,61 @@
 
   <p>We encountered permission-related issues when placing files into landing, often due to ownership settings. We resolved these by learning and applying vim and basic Linux permission commands. 
     Additionally, we manually removed headers before ingestion to meet staging format requirements.In staging, we faced frequent errors related to data partitioning. 
-    If audit files weren't deleted from the correct paths in HUE, the ingestion failed. 
-    I also learned the importance of running MSCK REPAIR TABLE to sync Hive table metadata with actual partitions.
-    In hindsight, automating the ingestion workflow with bash scripts or incorporating metadata checks earlier could have reduced manual effort and errors.</p>
-    This task deepened my understanding of HDFS, HUE, Hive, and the importance of process validation in data engineering. It also improved my troubleshooting and teamwork skills through close collaboration with interns and supervisors.</p>
+    If audit files weren't deleted from the correct paths in HUE, the ingestion failed.</p>
+  </div>
+
+  <div class="mobaxterm">
+    <img src="public/mobaxterm.jpg" alt="collage" />
+  </div> 
+
+  <div class="code-box">
+    <code>
+    :wq! - save changes  
+    :q! - quit  
+    :w! - save without quitting  
+    pwd - displays current directory  
+
+    ls -lrt  
+    -l use long listing format  
+    -r reverse order while sorting  
+    -t sort by modification time (newest first by default)  
+
+    vi is used to create/edit file  
+    e.g. vi {STGDL_REMOVE_HEADER.list}  
+
+    cat stands for concatenate and is used to display contents of a file in the terminal  
+    cat {STGDL_REMOVE_HEADER.list} [VIEW FILE]  
+    cat file1.txt file2.txt > combined.txt [COMBINE FILES]  
+
+    grep -i 1011 file1.txt (Search for '1011' in any letter case within file1.txt)  
+
+    chown {current_user}:"{domain users}" {table_name.txt} To change ownership  
+    chmod {775} {table_name.txt}/* To change file(s) permissions  
+
+    I - insert  
+    ESC - escape  
+
+    wc -l {table_name.txt} - Line Count of file (including headers)  
+
+    CTRL + G - to bring you to the most bottom line  
+    </code>
+    </div>
+  <div class="ind1text">
+    <p>I also learned the importance of running MSCK REPAIR TABLE to sync Hive table metadata with actual partitions.
+      In hindsight, automating the ingestion workflow with bash scripts or incorporating metadata checks earlier could have reduced manual effort and errors.
+    </p>
+
+    <p>This task deepened my understanding of HDFS, HUE, Hive, and the importance of process validation in data engineering. 
+      It also improved my troubleshooting and teamwork skills through close collaboration with others.
+    </p>
+  </div>
+    
+ 
 </div>
+<br>
 
 <div>
+  <div class="ind1text">
   <h3>Task 2: Datalake Ingestion for OCBCSG (Operations Department)</h3>
   <p>I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.</p>
   <p>As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
@@ -34,5 +83,57 @@
     If audit files weren't deleted from the correct paths in HUE, the ingestion failed. 
     I also learned the importance of running MSCK REPAIR TABLE to sync Hive table metadata with actual partitions.
     In hindsight, automating the ingestion workflow with bash scripts or incorporating metadata checks earlier could have reduced manual effort and errors.</p>
-    This task deepened my understanding of HDFS, HUE, Hive, and the importance of process validation in data engineering. It also improved my troubleshooting and teamwork skills through close collaboration with interns and supervisors.</p>
+  <p>This task deepened my understanding of HDFS, HUE, Hive, and the importance of process validation in data engineering. It also improved my troubleshooting and teamwork skills through close collaboration with interns and supervisors.</p>
+  </div>
+  <br>
+
+  <div class="visuals">
+    <h4>Mock-up given from user:</h4>
+      <img src="public/1.jpg" alt="collage" />
+      <br>
+
+    <h4>Subsequent changes after logic & visualisation discussions:</h4>
+      <img src="public/2.jpg" alt="collage" />
+      <br>
+      <img src="public/3.jpg" alt="collage" />
+      <br>
+      <img src="public/4.jpg" alt="collage" /> <img src="public/5.jpg" alt="collage" />
+      <br>
+
+    <h4>Finalised Dashboard:</h4>
+      <img src="public/6.jpg" alt="collage" />
+      <br>
+    
+    <h4>Creation of view with logic:</h4>
+      <img src="public/view.png" alt="collage" />
+      <br>
+    
+    <h4>Sanity Check after prelive:</h4>
+      <img src="public/sanitycheck.jpg" alt="collage" />
+
+    
+  </div>
 </div>
+<br>
+
+<div>
+  <div class="ind1text">
+  <h3>Task 3: DevOps Framework</h3>
+  <p>I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.</p>
+  <p>As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
+     This helped us identify the essential columns needed and clarified which fields contained PII (Personally Identifiable Information). 
+     After receiving the sample data, we anonymized all PII using hashing techniques and converted the files to .txt format before ingestion.</p>
+
+  <p>The ingestion pipeline followed a structured process: load to landing, push to staging, then ingest into the source datalake (SRCDL) via MobaXTerm. 
+    This phase was unexpectedly time-consuming due to unfamiliarity with MobaXTerm’s environment and command structure. 
+    Setting up sessions, managing credentials, and navigating the correct file paths posed significant challenges.</p>
+
+  <p>We encountered permission-related issues when placing files into landing, often due to ownership settings. We resolved these by learning and applying vim and basic Linux permission commands. 
+    Additionally, we manually removed headers before ingestion to meet staging format requirements.In staging, we faced frequent errors related to data partitioning. 
+    If audit files weren't deleted from the correct paths in HUE, the ingestion failed. 
+    I also learned the importance of running MSCK REPAIR TABLE to sync Hive table metadata with actual partitions.
+    In hindsight, automating the ingestion workflow with bash scripts or incorporating metadata checks earlier could have reduced manual effort and errors.</p>
+  <p>This task deepened my understanding of HDFS, HUE, Hive, and the importance of process validation in data engineering. It also improved my troubleshooting and teamwork skills through close collaboration with interns and supervisors.</p>
+  </div>
+</div>
+<br>
