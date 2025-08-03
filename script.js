@@ -38,3 +38,5 @@ function closeScreen() {
   document.getElementById('screen-title').textContent = '';
   document.getElementById('screen-content').innerHTML = '';
 }
+
+

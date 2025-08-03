@@ -38,7 +38,7 @@ html, body {
   
 }
 
-h3,h4,p,ul {
+h3,h4,h5,p,ul {
   margin:0.5rem;
 }
 
@@ -307,8 +307,9 @@ h2{
 }
 
 .ind1text .visuals{
-  padding-left:1rem;
+  padding-left:2rem;
   padding-right:2rem;
+  font-size:1rem;
   
 }
 
@@ -338,7 +339,14 @@ h2{
   max-width: 100vh;
   display: flex;
   border-radius: 5px;
+  padding-left:2rem;
   
+}
+
+.ind1picture img{
+  max-width: 70vw;
+  padding-left:2rem;
+
 }
 
 

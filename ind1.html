@@ -5,10 +5,10 @@
   <p>I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.
     As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
      This helped us identify the essential columns needed and clarified which fields contained PII (Personally Identifiable Information). 
-     After receiving the sample data, we anonymized all PII using hashing techniques and converted the files to .txt format before ingestion.</p>
+     After receiving the sample data, we anonymized all PII using hashing techniques and converted the files to .txt format for ingestion to UAT deployment.</p>
 
-  <p>The ingestion pipeline followed a structured process: load to landing, push to staging, then ingest into the source datalake (SRCDL) via MobaXTerm. 
-    This phase was unexpectedly time-consuming due to unfamiliarity with MobaXTerm’s environment and command structure. 
+  <p>The ingestion pipeline followed a structured process: loading data to landing, pushing data to staging, then ingestion into the source datalake (SRCDL) via MobaXTerm. 
+    This phase was unexpectedly time-consuming due to my unfamiliarity with MobaXTerm’s environment and command structure. 
     Setting up sessions, managing credentials, and navigating the correct file paths posed significant challenges.</p>
 
   <p>We encountered permission-related issues when placing files into landing, often due to ownership settings. We resolved these by learning and applying vim and basic Linux permission commands. 
@@ -20,6 +20,7 @@
     <img src="public/mobaxterm.jpg" alt="collage" />
   </div> 
 
+  <p>Below are some essential Vim/Linux commands I used during the ingestion process:</p>
   <div class="code-box">
     <code>
     :wq! - save changes  
@@ -57,33 +58,52 @@
       In hindsight, automating the ingestion workflow with bash scripts or incorporating metadata checks earlier could have reduced manual effort and errors.
     </p>
 
-    <p>This task deepened my understanding of HDFS, HUE, Hive, and the importance of process validation in data engineering. 
-      It also improved my troubleshooting and teamwork skills through close collaboration with others.
+    <p>
+      I also learned to initiate new dashboards using cleaned data from SRCDL, laying the foundation for future analytics projects.
+      This project deepened my technical knowledge in HDFS, HUE, and Hive, and gave me hands-on experience with tools like MobaXTerm, Vim, and Linux shell commands. 
+      I developed skills in troubleshooting ingestion issues, collaborating across teams, 
+      and ensuring metadata consistency through commands like `MSCK REPAIR TABLE`, which helps to synchronize with the new data partition.
+    </p>
+
+    <p> At the end of this task, we successfully ingested multiple datasets from different source systems into SRCDL. 
+        I independently handled permission errors, formatted staging files, and validated ingestion through Hive queries and HUE partition checks. 
+        This laid the foundation for my future analytics projects, improving my troubleshooting and teamwork skills as well, through close collaboration with others.
     </p>
   </div>
-    
- 
+
 </div>
 <br>
 
 <div>
   <div class="ind1text">
   <h3>Task 2: Datalake Ingestion for OCBCSG (Operations Department)</h3>
-  <p>I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.</p>
-  <p>As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
-     This helped us identify the essential columns needed and clarified which fields contained PII (Personally Identifiable Information). 
-     After receiving the sample data, we anonymized all PII using hashing techniques and converted the files to .txt format before ingestion.</p>
+  <p>In the same project CLO Tier 3 Dashboard, the user initially provided us with a mockup dashboard of how they wanted to view and track different case metrics — such as the number of pending cases, today's statistics, and historical statistics.
+    To support their requirements, we started by creating a Hive SQL table view that aggregated relevant operational data.</p>
+    <h4>Creation of view with logic:</h4>
+    <div class="ind1picture">
+      <img src="public/view.png" alt="collage" />
+    </div>
+      <br>
+    <p>
+    This involved crafting complex joins across multiple source tables and applying case logic and filtering based on business rules (e.g.disbursement case logic for disbursement dashboard). 
+    The logic we used is a nested SQL Query containing 3 layers:</p>
+    <ul>
+      <li><strong>First Layer (Innermost):</strong> Selected required columns and applied pre-filter logic (e.g., disbursement status).</li>
+      <li><strong>Second Layer (Middle):</strong> Joined supplementary tables such as the calendar and ops mapping tables to enrich the dataset.</li>
+      <li><strong>Third Layer (Outermost):</strong> Final selection and transformation of data into visualization-friendly format (e.g., creating SLA flags, deriving case status labels).</li>
+    </ul>
 
-  <p>The ingestion pipeline followed a structured process: load to landing, push to staging, then ingest into the source datalake (SRCDL) via MobaXTerm. 
-    This phase was unexpectedly time-consuming due to unfamiliarity with MobaXTerm’s environment and command structure. 
-    Setting up sessions, managing credentials, and navigating the correct file paths posed significant challenges.</p>
+ 
+    <p>
+    Throughout the project, we conducted weekly user engagement calls where we presented dashboard iterations and clarified business logic. 
+    These sessions helped us understand the users' business logic and visualization requirements more clearly.
+    The dashboard was built using Power BI, where we connected to our database to get the previously ingested data to have a draft for the dashboards to do sanity checks.
+    </p>
+    <div class="ind1picture">
+    <h4>Sanity Check after prelive:</h4>
+      <img src="public/sanitycheck.jpg" alt="collage" />
+    </div>
 
-  <p>We encountered permission-related issues when placing files into landing, often due to ownership settings. We resolved these by learning and applying vim and basic Linux permission commands. 
-    Additionally, we manually removed headers before ingestion to meet staging format requirements.In staging, we faced frequent errors related to data partitioning. 
-    If audit files weren't deleted from the correct paths in HUE, the ingestion failed. 
-    I also learned the importance of running MSCK REPAIR TABLE to sync Hive table metadata with actual partitions.
-    In hindsight, automating the ingestion workflow with bash scripts or incorporating metadata checks earlier could have reduced manual effort and errors.</p>
-  <p>This task deepened my understanding of HDFS, HUE, Hive, and the importance of process validation in data engineering. It also improved my troubleshooting and teamwork skills through close collaboration with interns and supervisors.</p>
   </div>
   <br>
 
@@ -104,14 +124,10 @@
       <img src="public/6.jpg" alt="collage" />
       <br>
     
-    <h4>Creation of view with logic:</h4>
-      <img src="public/view.png" alt="collage" />
-      <br>
-    
-    <h4>Sanity Check after prelive:</h4>
-      <img src="public/sanitycheck.jpg" alt="collage" />
-
-    
+    <p>The finalized Power BI dashboard is now used by the CLO Department to track disbursement cases, 
+      making sure they are all disbursed by the end of the day.
+      Iterative user feedback helped us align business definitions and logic, ensuring the dashboard met operational and audit requirements.
+</p>
   </div>
 </div>
 <br>
@@ -119,21 +135,45 @@
 <div>
   <div class="ind1text">
   <h3>Task 3: DevOps Framework</h3>
-  <p>I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.</p>
-  <p>As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
-     This helped us identify the essential columns needed and clarified which fields contained PII (Personally Identifiable Information). 
-     After receiving the sample data, we anonymized all PII using hashing techniques and converted the files to .txt format before ingestion.</p>
+  <p>I was introduced to the DevOps Framework adopted by the team. As an intern, I could not participate in the deployment/automation processes, but I knew it was important to understand and I gained a deeper understanding of tools like JIRA, BitBucket, Confluence and Jenkins are integrated into our developement and release cycle.</p>
+  <p>Everytime a project is started, departments follow the DevOps workflow, but some choose to customise, fitting to their own needs accordingly.</p>
+    <h5>Confluence:</h5> 
+    <p>Used for centralized documentation, where every change is documented (version control based)</p>
 
-  <p>The ingestion pipeline followed a structured process: load to landing, push to staging, then ingest into the source datalake (SRCDL) via MobaXTerm. 
-    This phase was unexpectedly time-consuming due to unfamiliarity with MobaXTerm’s environment and command structure. 
-    Setting up sessions, managing credentials, and navigating the correct file paths posed significant challenges.</p>
+    <h5>JIRA:</h5> 
+    <p>Creates tickets</p>
+    
+    <p>Nodes:</p>
+      <ul>
+        <li>Story node: For business users to document</li>
+        <li>Task node: Can be business or technical task to support story</li>
+        <li>Epic node: Subtitle of a story (Parent)</li>
+        <li>Bug node: Highlight existing bug in deployment and is usually more priortized</li>
+        <li>SIT Release node: First ticket created, usually for developers</li>
+        <li>UAT/PROD Release node: Generated after confirmation of SIT release</li>
+      </ul>
+    </li>
 
-  <p>We encountered permission-related issues when placing files into landing, often due to ownership settings. We resolved these by learning and applying vim and basic Linux permission commands. 
-    Additionally, we manually removed headers before ingestion to meet staging format requirements.In staging, we faced frequent errors related to data partitioning. 
-    If audit files weren't deleted from the correct paths in HUE, the ingestion failed. 
-    I also learned the importance of running MSCK REPAIR TABLE to sync Hive table metadata with actual partitions.
-    In hindsight, automating the ingestion workflow with bash scripts or incorporating metadata checks earlier could have reduced manual effort and errors.</p>
-  <p>This task deepened my understanding of HDFS, HUE, Hive, and the importance of process validation in data engineering. It also improved my troubleshooting and teamwork skills through close collaboration with interns and supervisors.</p>
-  </div>
+    <h5>BitBucket,Jenkins; Code Repository & Pipeline Debugging/Automation Tool:</h5> 
+    <p>Developers store and manage code using Bitbucket (similar to GitHub).</p>
+    <p>Code changes are reviewed via Pull Requests.</p>
+    <p>Jenkins is used to automate builds and help troubleshoot issues.</p>
+    <p>Work together to ensure smooth and error-free deployments.</p>
+
+    <h5>Infinity Ticket:</h5> 
+    <p>Used before deploying to UAT/PROD:</p>
+      <ul>
+        <li>What is being deployed?</li>
+        <li>Who tested it?</li>
+        <li>Is there a rollback plan? (If anything goes wrong, what will happen?)</li>
+        <li>Go?/No-Go Decision?</li>
+      </ul>
+
+    <h5>Change Activity Committee (CAC):</h5> 
+    <p>Reviews all upcoming deployments/changes</p>
+    <p>Details from Infinity Ticket are compiled into an Excel sheet and discussed</p>
+    <p>Does the request follow the policy? Are all approvals and testing done? Are Security Requirements cleared?</p>
+    <p>If approved, deployementt can proceed after office hours (Green Zone), or during office hours (Red Zone; More sensitive)</p>
+</div>
 </div>
 <br>
