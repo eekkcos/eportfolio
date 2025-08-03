@@ -163,6 +163,7 @@ h3,h4,h5,p,ul {
   width: 100%;
   height: 100%;
   padding-left: 1rem;
+  padding-right: 1rem;
   transition: opacity 0.3s ease 0.3s;
   font-family: 'Quicksand', sans-serif;
   box-sizing: border-box;
@@ -348,6 +349,37 @@ h2{
   padding-left:2rem;
 
 }
+
+.accordion-button {
+  width: 100%;
+  background-color: #be6be4;
+  color: white;
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: none;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.accordion-button:hover {
+  background-color: #cb87eb;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding: 0 1rem;
+  background-color: #f9f9f9;
+}
+
+/* When active */
+.accordion-item.active .accordion-content {
+  padding: 1rem;
+}
+
+
 
 
 

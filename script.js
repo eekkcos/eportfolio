@@ -23,13 +23,19 @@ function openScreen(screenName) {
     .then(html => {
       document.getElementById('screen-content').innerHTML = html;
       const screen = document.getElementById('screen');
-      screen.classList.add('screen-open'); // Show screen
-      screen.style.display = 'flex';       // Trigger flex layout
+      screen.classList.add('screen-open');
+      screen.style.display = 'flex';
+
+      // ✅ Call accordion initializer ONLY if it's ind1
+      if (screenName === 'ind1') {
+        initAccordion();
+      }
     })
     .catch(err => {
       document.getElementById('screen-content').innerHTML = `<p>Error: ${err.message}</p>`;
     });
 }
+
 
 function closeScreen() {
   const screen = document.getElementById('screen');
@@ -38,5 +44,27 @@ function closeScreen() {
   document.getElementById('screen-title').textContent = '';
   document.getElementById('screen-content').innerHTML = '';
 }
+
+
+function initAccordion() {
+  document.querySelectorAll('.accordion-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.parentElement;
+      const content = item.querySelector('.accordion-content');
+
+      if (item.classList.contains('active')) {
+        // Collapse current
+        content.style.maxHeight = null;
+        item.classList.remove('active');
+      } else {
+        // Expand current only, without closing others
+        item.classList.add('active');
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+    });
+  });
+}
+
+
 
 
