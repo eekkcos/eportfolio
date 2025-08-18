@@ -1,208 +1,193 @@
 <!-- ind1.html -->
-<div>
+<div class="accordion-container">
+
+  <!-- Task 1 -->
   <div class="accordion-item">
-  <button class="accordion-button">Task 1: Datalake Ingestion for OCBCSG (Operations Department)</button>
-  <div class="accordion-content">
-  <div class="ind1text">
-  <h3>Task 1: Datalake Ingestion for OCBCSG (Operations Department)</h3>
-  <p>I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.
-    As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
-     This helped us identify the essential columns needed and clarified which fields contained PII (Personally Identifiable Information). 
-     After receiving the sample data, we anonymized all PII using hashing techniques and converted the files to .txt format for ingestion to UAT deployment.</p>
+    <button class="accordion-button">Task 1: Datalake Ingestion for OCBCSG (Operations Department)</button>
+    <div class="accordion-content">
+      <div class="ind1text">
+        <h3>Task 1: Datalake Ingestion for OCBCSG (Operations Department)</h3>
+         <p>
+            I was assigned the CLO (Consumer Loans Operation) Tier 3 Dashboard, which helps fellow OCBC colleagues in the CLO department to track their cases and KPI easily, improving their productivity and efficiency.
+            As part of the data ingestion process we began by gathering user requirements through stakeholder meetings. 
+            This helped us identify the essential columns needed and clarified which fields contained PII (Personally Identifiable Information). 
+            After receiving the sample data, we anonymized all PII using hashing techniques and converted the files to .txt format for ingestion to UAT deployment.
+          </p>
+        <p>
+          The ingestion pipeline followed: Landing → Staging → SRCDL via MobaXTerm.
+        </p>
 
-  <p>The ingestion pipeline followed a structured process: loading data to landing, pushing data to staging, then ingestion into the source datalake (SRCDL) via MobaXTerm. 
-    This phase was unexpectedly time-consuming due to my unfamiliarity with MobaXTerm’s environment and command structure. 
-    Setting up sessions, managing credentials, and navigating the correct file paths posed significant challenges.</p>
+        <p>
+          This phase was unexpectedly time-consuming due to my unfamiliarity with MobaXTerm’s environment and command structure. 
+          Setting up sessions, managing credentials, and navigating the correct file paths posed significant challenges.
+          We encountered permission-related issues when placing files into landing, often due to ownership settings. We resolved these by learning and applying vim and basic Linux permission commands. 
+          Additionally, we manually removed headers before ingestion to meet staging format requirements.In staging, we faced frequent errors related to data partitioning. 
+          If audit files weren't deleted from the correct paths in HUE, the ingestion failed.
+        </p>
 
-  <p>We encountered permission-related issues when placing files into landing, often due to ownership settings. We resolved these by learning and applying vim and basic Linux permission commands. 
-    Additionally, we manually removed headers before ingestion to meet staging format requirements.In staging, we faced frequent errors related to data partitioning. 
-    If audit files weren't deleted from the correct paths in HUE, the ingestion failed.</p>
+
+        <div class="ind1picture">
+          <img src="public/mobaxterm.jpg" alt="MobaXTerm screenshot">
+        </div>
+
+        <p>Essential Vim/Linux commands:</p>
+        <div class="code-box">
+          <code>
+            :wq! - save changes  
+            :q! - quit  
+            :w! - save without quitting  
+            pwd - current directory  
+
+            ls -lrt  
+            -l long listing  
+            -r reverse order  
+            -t sort by modification time  
+
+            vi file.txt - create/edit file  
+
+            cat file.txt - view contents  
+            cat file1.txt file2.txt > combined.txt - combine files  
+
+            grep -i 1011 file1.txt - search '1011' case-insensitive  
+
+            chown {user}:{group} file.txt - change ownership  
+            chmod 775 file.txt/* - change permissions  
+
+            I - insert  
+            ESC - escape  
+
+            wc -l file.txt - line count  
+            CTRL+G - jump to bottom
+          </code>
+        </div>
+
+        <p>
+          I have learnt the importance of running MSCK REPAIR TABLE to sync Hive table metadata with actual partitions, initiate new dashboards using cleaned data from SRCDL, 
+          being able to lay the foundation for future analytics projects.
+        </p>
+        <p>
+          This project deepened my technical knowledge in HDFS, HUE, and Hive, and gave me hands-on experience with tools like MobaXTerm, Vim, and Linux shell commands. 
+          I developed skills in troubleshooting ingestion issues, collaborating across teams, 
+          and ensuring metadata consistency through commands like `MSCK REPAIR TABLE`, which helps to synchronize with the new data partition.
+        </p>
+        <p>
+          At the end of this task, we successfully ingested multiple datasets from different source systems into SRCDL. 
+          I independently handled permission errors, formatted staging files, and validated ingestion through Hive queries and HUE partition checks. 
+          This laid the foundation for my future analytics projects, improving my troubleshooting and teamwork skills as well, through close collaboration with others.
+        </p>
+      </div>
+    </div>
   </div>
 
-  <div class="mobaxterm">
-    <img src="public/mobaxterm.jpg" alt="collage" />
-  </div> 
+  <!-- Task 2 -->
+  <div class="accordion-item">
+    <button class="accordion-button">Task 2: Development of Visualisation Dashboard for OCBCSG (Operations Department)</button>
+    <div class="accordion-content">
+      <div class="ind1text">
+        <h3>Task 2: Development of Visualisation Dashboard for OCBCSG (Operations Department)</h3>
 
-  <p>Below are some essential Vim/Linux commands I used during the ingestion process:</p>
-  <div class="code-box">
-    <code>
-    :wq! - save changes  
-    :q! - quit  
-    :w! - save without quitting  
-    pwd - displays current directory  
+        <p>In the same project CLO Tier 3 Dashboard, the user initially provided us with a mockup dashboard of how they wanted to view and track different case metrics — such as the number of pending cases, today's statistics, and historical statistics.
+            To support their requirements, we started by creating a Hive SQL table view that aggregated relevant operational data.
+        </p>
 
-    ls -lrt  
-    -l use long listing format  
-    -r reverse order while sorting  
-    -t sort by modification time (newest first by default)  
+        <h4>View Creation Logic:</h4>
+        <p>
+          This involved crafting complex joins across multiple source tables and applying case logic and filtering based on business rules (e.g.disbursement case logic for disbursement dashboard). 
+          The logic we used is a nested SQL Query containing 3 layers:
+        </p>
+        <ul>
+          <li><strong>Layer 1:</strong> Select required columns and pre-filter (e.g., disbursement status).</li>
+          <li><strong>Layer 2:</strong> Join supplementary tables (calendar, ops mapping) to enrich data.</li>
+          <li><strong>Layer 3:</strong> Final selection & transformation for visualization (SLA flags, case status labels).</li>
+        </ul>
 
-    vi is used to create/edit file  
-    e.g. vi file.txt
+        <div class="ind1picture">
+          <img src="public/view.png" alt="SQL View Diagram">
+        </div>
 
-    cat stands for concatenate and is used to display contents of a file in the terminal  
-    cat file.txt [VIEW FILE]  
-    cat file1.txt file2.txt > combined.txt [COMBINE FILES]  
+        <p>
+        Throughout the project, we conducted weekly user engagement calls where we presented dashboard iterations and clarified business logic. 
+        These sessions helped us understand the users' business logic and visualization requirements more clearly.
+        The dashboard was built using Power BI, where we connected to our database to get the previously ingested data to have a draft for the dashboards to do sanity checks.
+        </p>
+        <div class="ind1picture">
+          <h4>Sanity Check:</h4>
+          <img src="public/sanitycheck.jpg" alt="Sanity Check Screenshot">
+        </div>
 
-    grep -i 1011 file1.txt (Search for '1011' in any letter case within file1.txt)  
+        <p>
+        Throughout the project, we conducted weekly user engagement calls where we presented dashboard iterations and clarified business logic. 
+        These sessions helped us understand the users' business logic and visualization requirements more clearly.
+        The dashboard was built using Power BI, where we connected to our database to get the previously ingested data to have a draft for the dashboards to do sanity checks.
+        </p>
 
-    chown {current_user}:"{domain users}" {table_name.txt} To change ownership  
-    chmod {775} {table_name.txt}/* To change file(s) permissions  
+        <div class="ind1picture">
+          <h4>These are some <u>fill in</u> visuals to show how the dashboard has improved through weekly user engagement calls:</h4>
+          <p>First mockup:</p>
+          <img src="public/1.png" alt="Mockup 1">
+          <p>Updates after calls:</p>
+          <img src="public/2.png" alt="Mockup 2">
+          <p>Final Layout:</p>
+          <img src="public/3.png" alt="Final Dashboard">
+        </div>
 
-    I - insert  
-    ESC - escape  
+        <p>
+          The finalized Power BI dashboard is now used by the CLO Department to track disbursement cases, 
+          making sure they are all disbursed by the end of the day.
+          Iterative user feedback helped us align business definitions and logic, ensuring the dashboard met operational and audit requirements.
+        </p>
 
-    wc -l {table_name.txt} - Line Count of file (including headers)  
-
-    CTRL + G - to bring you to the most bottom line  
-    </code>
+      </div>
     </div>
-  <div class="ind1text">
-    <p>I also learned the importance of running MSCK REPAIR TABLE to sync Hive table metadata with actual partitions.
-      In hindsight, automating the ingestion workflow with bash scripts or incorporating metadata checks earlier could have reduced manual effort and errors.
-    </p>
+  </div>
 
-    <p>
-      I also learned to initiate new dashboards using cleaned data from SRCDL, laying the foundation for future analytics projects.
-      This project deepened my technical knowledge in HDFS, HUE, and Hive, and gave me hands-on experience with tools like MobaXTerm, Vim, and Linux shell commands. 
-      I developed skills in troubleshooting ingestion issues, collaborating across teams, 
-      and ensuring metadata consistency through commands like `MSCK REPAIR TABLE`, which helps to synchronize with the new data partition.
-    </p>
+  <!-- Task 3 -->
+  <div class="accordion-item">
+    <button class="accordion-button">Task 3: DevOps Framework</button>
+    <div class="accordion-content">
+      <div class="ind1text">
+        <h3>Task 3: DevOps Framework</h3>
+        <p>I was introduced to the DevOps Framework adopted by the team. 
+          As an intern, I could not participate in the deployment/automation processes, 
+          but I knew it was important to understand and I gained a deeper understanding of tools like JIRA, BitBucket, Confluence and Jenkins are integrated into our developement and release cycle.
+        </p>
+        <p>Everytime a project is started, departments follow the DevOps workflow, but some choose to customise, fitting to their own needs accordingly.
 
-    <p> At the end of this task, we successfully ingested multiple datasets from different source systems into SRCDL. 
-        I independently handled permission errors, formatted staging files, and validated ingestion through Hive queries and HUE partition checks. 
-        This laid the foundation for my future analytics projects, improving my troubleshooting and teamwork skills as well, through close collaboration with others.
-    </p>
+        </p>
+
+
+        <h5>Confluence:</h5>
+        <p>Centralized documentation with version control.</p>
+
+        <h5>JIRA:</h5>
+        <p>Ticketing system with nodes: Story, Task, Epic, Bug, SIT Release, UAT/PROD Release.</p>
+
+        <div class="ind1picture">
+          <img src="public/JIRA.jpg" alt="JIRA Screenshot">
+          <img src="public/devops2.jpg" alt="DevOps Screenshot">
+        </div>
+
+        <h5>Bitbucket & Jenkins:</h5>
+        <p>Bitbucket stores code; Jenkins automates builds and debugging. Pull Requests are used for code reviews.</p>
+
+        <div class="ind1picture">
+          <h5>Infinity Ticket:</h5>
+          <img src="public/devops1.jpg" alt="Infinity Ticket">
+        </div>
+
+        <h5>Change Activity Committee (CAC):</h5> 
+          <p>Reviews all upcoming deployments/changes</p>
+          <ul>
+            <li>Details from Infinity Ticket are compiled into an Excel sheet and discussed</p>
+            <li>Does the request follow the policy? Are all approvals and testing done? Are Security Requirements cleared?</p>
+            <li>If approved, deployment can proceed after office hours (Green Zone), or during office hours (Red Zone; More sensitive)</p>
+          </ul>
+
+        <p>I didn’t know there were so many steps and checks before something can be deployed.
+            This experience gave me a better understanding of how real projects are handled, and it made me more interested to learn about DevOps in the future.
+        </p>
+      </div>
+    </div>
   </div>
 
 </div>
-  </div>
-</div>
-
-<br>
-
-
-<div class="accordion-item">
-  <button class="accordion-button">Task 2: Development of Visualisation Dashboard for OCBCSG (Operations Department)</button>
-  <div class="accordion-content">
-<div>
-  <div class="ind1text">
-  <h3>Task 2: Development of Visualisation Dashboard for OCBCSG (Operations Department)</h3>
-  <p>In the same project CLO Tier 3 Dashboard, the user initially provided us with a mockup dashboard of how they wanted to view and track different case metrics — such as the number of pending cases, today's statistics, and historical statistics.
-    To support their requirements, we started by creating a Hive SQL table view that aggregated relevant operational data.</p>
-    <h4>Creation of view with logic:</h4>
-    <div class="ind1picture">
-      <img src="public/view.png" alt="collage" />
-    </div>
-      <br>
-    <p>
-    This involved crafting complex joins across multiple source tables and applying case logic and filtering based on business rules (e.g.disbursement case logic for disbursement dashboard). 
-    The logic we used is a nested SQL Query containing 3 layers:</p>
-    <ul>
-      <li><strong>First Layer (Innermost):</strong> Selected required columns and applied pre-filter logic (e.g., disbursement status).</li>
-      <li><strong>Second Layer (Middle):</strong> Joined supplementary tables such as the calendar and ops mapping tables to enrich the dataset.</li>
-      <li><strong>Third Layer (Outermost):</strong> Final selection and transformation of data into visualization-friendly format (e.g., creating SLA flags, deriving case status labels).</li>
-    </ul>
-
- 
-    <p>
-    Throughout the project, we conducted weekly user engagement calls where we presented dashboard iterations and clarified business logic. 
-    These sessions helped us understand the users' business logic and visualization requirements more clearly.
-    The dashboard was built using Power BI, where we connected to our database to get the previously ingested data to have a draft for the dashboards to do sanity checks.
-    </p>
-    <div class="ind1picture">
-    <h4>Sanity Check after prelive:</h4>
-      <img src="public/sanitycheck.jpg" alt="collage" />
-    </div>
-
-  </div>
-  <br>
-
-  <div class="visuals">
-    <h4>These are some fill in visuals to show how the dashboard has improved through weekly user engagement calls:
-      <p>First user mock up dashboard:</p>
-      <img src="public/1.png" alt="collage" />
-      <br>
-      <p>Subsequent calls leading to updates and changes:</p>
-      <img src="public/2.png" alt="collage" />
-      <br>
-      <p>Final Layout for Dashboard:</p>
-      <img src="public/3.png" alt="collage" />
-      <br>
-    </h4>
-      
-    <p>The finalized Power BI dashboard is now used by the CLO Department to track disbursement cases, 
-      making sure they are all disbursed by the end of the day.
-      Iterative user feedback helped us align business definitions and logic, ensuring the dashboard met operational and audit requirements.
-</p>
-  </div>
-</div>
-</div>
-</div>
-
-<br>
-
-
-
-<div class="accordion-item">
-  <button class="accordion-button">Task 3: DevOps Framework</button>
-  <div class="accordion-content">
-<div>
-  <div class="ind1text">
-  <h3>Task 3: DevOps Framework</h3>
-  <p>I was introduced to the DevOps Framework adopted by the team. As an intern, I could not participate in the deployment/automation processes, but I knew it was important to understand and I gained a deeper understanding of tools like JIRA, BitBucket, Confluence and Jenkins are integrated into our developement and release cycle.</p>
-  <p>Everytime a project is started, departments follow the DevOps workflow, but some choose to customise, fitting to their own needs accordingly.</p>
-    <h5>Confluence:</h5> 
-    <p>Used for centralized documentation, where every change is documented (version control based)</p>
-
-    <h5>JIRA:</h5> 
-    <p>Creates tickets</p>
-    <div class="visuals">
-    <img src="public/JIRA.jpg" alt="collage" />
-    <img src="public/devops2.jpg" alt="collage" />
-    </div>
-    <p>Nodes:</p>
-      <ul>
-        <li>Story node: For business users to document</li>
-        <li>Task node: Can be business or technical task to support story</li>
-        <li>Epic node: Subtitle of a story (Parent)</li>
-        <li>Bug node: Highlight existing bug in deployment and is usually more priortized</li>
-        <li>SIT Release node: First ticket created, usually for developers</li>
-        <li>UAT/PROD Release node: Generated after confirmation of SIT release</li>
-      </ul>
-    </li>
-
-    <h5>BitBucket,Jenkins; Code Repository & Pipeline Debugging/Automation Tool:</h5> 
-    <p>Developers store and manage code using Bitbucket (similar to GitHub).</p>
-    <p>Code changes are reviewed via Pull Requests.</p>
-    <p>Jenkins is used to automate builds and help troubleshoot issues.</p>
-    <p>Work together to ensure smooth and error-free deployments.</p>
-    <div class="visuals">
-    <h5>Infinity Ticket:</h5> 
-     <img src="public/devops1.jpg" alt="collage" />
-    </div>
-    <p>Used before deploying to UAT/PROD:</p>
-      <ul>
-        <li>What is being deployed?</li>
-        <li>Who tested it?</li>
-        <li>Is there a rollback plan? (If anything goes wrong, what will happen?)</li>
-        <li>Go?/No-Go Decision?</li>
-      </ul>
-
-    
-
-    <h5>Change Activity Committee (CAC):</h5> 
-    <p>Reviews all upcoming deployments/changes</p>
-    <p>Details from Infinity Ticket are compiled into an Excel sheet and discussed</p>
-    <p>Does the request follow the policy? Are all approvals and testing done? Are Security Requirements cleared?</p>
-    <p>If approved, deployementt can proceed after office hours (Green Zone), or during office hours (Red Zone; More sensitive)</p>
-
-  <p>I didn’t know there were so many steps and checks before something can be deployed.
-    This experience gave me a better understanding of how real projects are handled, and it made me more interested to learn about DevOps in the future.
-  </P>
-</div>
-</div>
-</div>
-</div>
-<br>
-
-

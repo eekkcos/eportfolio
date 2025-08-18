@@ -310,12 +310,17 @@ h2{
 .ind1text .visuals{
   padding-left:2rem;
   padding-right:2rem;
+  padding-bottom:2rem;
   font-size:1rem;
   
 }
 
-.mobaxterm{
-  padding: 1rem;
+
+.ind1picture img{
+  max-width: 40vw;
+  padding-left:2rem;
+  display: flex;
+  border-radius: 5px;
 }
 
 
@@ -335,20 +340,7 @@ h2{
   margin-left:1rem;
 }
 
-.visuals img{
-  max-width: 85vw;
-  max-width: 100vh;
-  display: flex;
-  border-radius: 5px;
-  padding-left:2rem;
-  
-}
 
-.ind1picture img{
-  max-width: 70vw;
-  padding-left:2rem;
-
-}
 
 .accordion-button {
   width: 100%;
@@ -370,13 +362,14 @@ h2{
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease;
-  padding: 0 1rem;
+  padding:0 1rem;
   background-color: #f9f9f9;
 }
 
 /* When active */
 .accordion-item.active .accordion-content {
   padding: 1rem;
+  max-height: none;
 }
 
 
